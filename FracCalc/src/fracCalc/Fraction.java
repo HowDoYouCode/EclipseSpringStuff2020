@@ -6,31 +6,20 @@ public class Fraction {
 	private int denominator;
 	private String sign;
 	
-	public Fraction(int whole, int numerator, int denominator){
-		setwhole(whole);
-		setnumerator(numerator);
-		setdenominator(denominator);
-	}
-	public void setwhole(int whole) {
-		this.whole=whole;
+	public Fraction(int whole, int numerator, int denominator, String sign){
+		this.whole = whole;
+		this.numerator = numerator;
+		this.denominator = denominator;
+		this.sign = sign;
 	}
 	public int getwhole() {
 		return whole;
 	}
-	public void setnumerator(int numerator) {
-		this.numerator=numerator;
-	}
 	public int getnumerator() {
 		return numerator;
 	}
-	public void setdenominator(int denominator) {
-		this.denominator=denominator;
-	}
 	public int getdenominator() {
 		return denominator;
-	}
-	public void setsign(String sign) {
-		this.sign=sign;
 	}
 	public String getsign() {
 		return sign;
