@@ -5,54 +5,91 @@ public class Fraction {
 	private int numerator;
 	private int denominator;
 	private String sign;
+	private boolean isnegative = false;
 	
-	public Fraction(int whole, int numerator, int denominator, String sign){
+	public Fraction(){
+		this.whole = 0;
+		this.numerator = 0;
+		this.denominator = 1;
+	}
+	public Fraction(String fraction) { //overload, take string of the fraction from the array in fraccal.
+		int[] fractionint = split(fraction);
+		this.whole = fractionint[0];
+		this.numerator = fractionint[1];
+		this.denominator = fractionint[2];
+	}
+	public void setwhole(int whole) {  //setter
 		this.whole = whole;
+	}
+	public void setnumerator(int numerator) {  //setter 
 		this.numerator = numerator;
+	}
+	public void setdenominator(int denominator) {  //setter
 		this.denominator = denominator;
+	}
+	public void setsign(String sign) {
 		this.sign = sign;
 	}
-	public int getwhole() {
+	public int getwhole() {  //getter
 		return whole;
 	}
-	public int getnumerator() {
+	public int getnumerator() {  //getter
 		return numerator;
 	}
-	public int getdenominator() {
+	public int getdenominator() {  //getter
 		return denominator;
 	}
 	public String getsign() {
 		return sign;
 	} 
-	public int toImproperFraction(int numerator, int denominator, int whole) {
-		if (whole < 0) {
-			numerator = denominator * whole - numerator;
+	public void toImproperFraction() {
+		if (whole != absValue(whole)) {
+			numerator = numerator - (whole * denominator);
+			numerator = -numerator;
+			whole = 0;
 		} else {
-			numerator = denominator * whole + numerator;
+			numerator = numerator + (whole * denominator);
+			whole = 0;
 		}
-		this.whole = 0;
-		return numerator;
 	}
-	public String toMixedNum(int numerator, int commondenominator) {
-		int whole = numerator/commondenominator;
-		int tempnumer = numerator % commondenominator;
-		if (absValue(tempnumer)==0 && absValue(commondenominator)==1) {
-			return whole+"";
-		} else if (whole==0) {
-			return tempnumer + "/" + absValue(commondenominator);
-		}
-		return whole + "_" + absValue(tempnumer) + "/" + absValue(commondenominator);
+	public static int[] split(String str) {
+    	int[] split = {0,0,1}; // whole, numerator, denominator
+    	if (str.indexOf("_") == -1 && str.indexOf("/") == -1) { // check for whole
+        	split[0] = Integer.parseInt(str); // whole
+      
+        } else if (str.indexOf("_") == -1) { // fraction only
+        	String[] answer = str.split("/");
+        	
+        	split[1] = Integer.parseInt(answer[0]); // numerator
+        	split[2] =Integer.parseInt( answer[1]); // denominator
+       	} else { // both whole and fraction
+        	String[] answer = str.split("_");
+        	split[0] = Integer.parseInt(answer[0]); //whole
+        	String[] ators = answer[1].split("/");
+        	split[1] = Integer.parseInt(ators[0]); // numerator
+        	split[2] = Integer.parseInt(ators[1]); // denominator
+        }
+    	return split;
 	}
-	public int gcf(int num, int num2) {
-		while (num2 != 0) {
-			int temp = num;
-			num = num2;
-			num2 = temp % num2;
+	public void toMixedNum() {
+		this.whole = this.numerator/this.denominator;
+		this.numerator = this.numerator % this.denominator;
+		if (this.denominator != absValue(this.denominator) || this.whole != absValue(this.whole) || this.numerator != absValue(this.numerator)) {  // if ANYTHING is not positive
+			this.isnegative = true;
+		} else {
+		 this.isnegative = false;	
 		}
-		double a = (double)num;
+	}
+	public int gcf(int numerator, int commondenominator) {
+		while (commondenominator != 0) {
+			int temp = numerator;
+			numerator = commondenominator;
+			commondenominator = temp % commondenominator;
+		}
+		double a = (double)numerator;
 		absValue(a);
-		num=(int)a;
-		return num;
+		numerator=(int)a;
+		return numerator;
 	}
 	public int absValue(int num) {
 		if (num < 0) {
@@ -61,45 +98,74 @@ public class Fraction {
 			return num;
 		}
 	}
-	public double absValue(double num) {
+	public double absValue(double num) { //overloaded absValue
 		if (num < 0) {
 			return -num;
 		} else {
 			return num;
 		}
 	}
-	public String reduceAnswer(int numerator, int commondenominator) {
-		int tempnum = numerator;
-		int tempdenom = commondenominator;
-		int temp = gcf(tempnum, commondenominator);
-		tempnum = tempnum/temp;
-		tempdenom = tempdenom/temp;
-		return toMixedNum(tempnum, tempdenom);
+	public void reduceAnswer() {
+		int num = gcf(this.numerator, this.denominator);
+		this.numerator = this.numerator/num;
+		this.denominator = this.denominator/num;
+		toMixedNum();
 	}
-	public String add(int whole, int numerator, int denominator, int whole2, int numerator2, int denominator2) {
-		int commondenominator = denominator * denominator2;
-		if (numerator==0 && numerator2==0) {
-			return (whole + whole2 + "");
-		} if (denominator2==1) {
-			return reduceAnswer(numerator += numerator2 * denominator, commondenominator);
-		} else if (denominator==1) {
-			return reduceAnswer(numerator2 += (numerator * denominator2),commondenominator );
+	public String toString() {
+		if (this.isnegative == true) {
+			if (absValue(numerator) == 0 && absValue(denominator) == 1) {
+				return "-" + absValue(whole);
+			} else if (absValue(whole) == 0) {
+				return "-" + absValue(numerator) + "/" + absValue(denominator);
+			}
+			return "-" + absValue(whole) +"_"+ absValue(numerator) + "/" + absValue(denominator);
+		} else {
+			if (absValue(numerator) == 0 && absValue(denominator) == 1) {
+				return whole+"";
+			} else if (absValue(whole) == 0) {
+				return absValue(numerator) + "/" + absValue(denominator);
+			}
+			return absValue(whole) +"_"+ absValue(numerator) + "/" + absValue(denominator);
 		}
-		return reduceAnswer((numerator * denominator2) + (numerator2 * denominator), commondenominator);
 	}
-	public String subtract (int whole, int numerator, int denominator, int whole2, int numerator2, int denominator2) {
-		int commondenominator = denominator * denominator2;
-		if (denominator == 1) {
-			return reduceAnswer(numerator - (numerator * denominator), commondenominator);
-		} else if (denominator2 == 1) {
-			return reduceAnswer((numerator2 * denominator) - numerator, commondenominator);
+	public void add(Fraction fraction) {
+		fraction.toImproperFraction();
+		toImproperFraction();
+		this.numerator = (this.numerator * fraction.getdenominator()) + (fraction.getnumerator() * this.denominator);
+		this.denominator = (this.denominator * fraction.getdenominator());
+		reduceAnswer();
+	}
+	public void subtract (Fraction fraction) {
+		fraction.toImproperFraction();
+		toImproperFraction();
+		this.numerator = (this.numerator * fraction.getdenominator()) - (fraction.getnumerator() * this.denominator);
+		this.denominator = (this.denominator * fraction.getdenominator());
+		reduceAnswer();
+	}
+	public void multiply (Fraction fraction) {
+		fraction.toImproperFraction();
+		toImproperFraction();
+		this.numerator = this.numerator * fraction.getnumerator();
+		this.denominator = this.denominator * fraction.getdenominator();
+		reduceAnswer();
+	}
+	public void divide (Fraction fraction) {
+		toImproperFraction();
+		fraction.toImproperFraction();
+		this.numerator = this.numerator * fraction.getdenominator();
+		this.denominator = this.denominator * fraction.getnumerator();
+		reduceAnswer();
+	}
+	public void domath(Fraction fraction, String sign) {
+		setsign(sign);
+		if (this.sign.equals("+")) {
+			add(fraction);
+		} else if(this.sign.equals("-")) {
+			subtract(fraction);
+		} else if(this.sign.equals("*")) {
+			multiply(fraction);
+		} else {
+			divide(fraction);
 		}
-		return reduceAnswer((numerator * denominator2) - (numerator2 * denominator), commondenominator);
-	}
-	public String divide (int whole, int numerator, int denominator, int whole2, int numerator2, int denominator2) {
-		
-	}
-	public String multiply (int whole, int numerator, int denominator, int whole2, int numerator2, int denominator2) {
-		
 	}
 }

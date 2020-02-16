@@ -1,5 +1,5 @@
-/*
- * 
+/*ZhanHeng Mai
+ * The lord of the ring traveler 2 party many dwarfs with object oriented coding
  */
 import java.util.ArrayList;
 

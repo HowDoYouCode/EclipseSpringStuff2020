@@ -25,13 +25,13 @@ public class FracCalc {
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input) { 
         // TODO: Implement this function to produce the solution to the input
-        String[] operand = input.split(" ");
-        String fraction1 = operand[0];
-        String operator = operand[1];
-        String fraction2 = operand[2];
-        
-        
-        return "";
+        String[] split = input.split(" ");  // split into 3 part
+        Fraction fraction1 = new Fraction(split[0]);  // first part fraction
+        String sign = (split[1]);   // second part sign
+        Fraction fraction2 = new Fraction(split[2]);  //second part fraction
+
+        fraction1.domath(fraction2, sign); // pass it all in to do the math
+        return fraction1.toString();  // make it actually readable not just @something
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
