@@ -2,9 +2,14 @@ package textExcel;
 
 // Update this file with your own code.
 
-public class Spreadsheet implements Grid
-{
-
+public class Spreadsheet implements Grid {
+	private Cell[][] cells;
+	private int rows;
+	private int cols;
+	
+	public Spreadsheet() {
+		Cell[][] cells = ;
+	}
 	@Override
 	public String processCommand(String command)
 	{
