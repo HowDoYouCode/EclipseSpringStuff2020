@@ -1,6 +1,3 @@
-/*
- * 
- */
 import java.util.ArrayList;
 
 public class ThereAndBackAgain 
@@ -42,19 +39,35 @@ public class ThereAndBackAgain
 		Wizard gandalf = new Wizard("Gandalf", "Grey");
 		party2.add(gandalf);
 		//write createParty
-		public static void createParty(String[] name) {
-			
-		}
-		// Call the createParty method and pass it party2 and the dwarfNames array.
 		
+		// Call the createParty method and pass it party2 and the dwarfNames array.
 		// create party should add all the new dwarves to party2,
-
+		createParty(party2, dwarfNames);
 		//Write allTravel
 		// Finally, call the allTravel method passing it party2 and 100 (representing
 		// the 100 miles that party2 has traveled together.
-
+		allTravel(party2, 100);
 		//Make sure your code prints out the name and distances party2 has traveled.
+		int i = 0;
+		while (i != party2.size()) {
+			System.out.println(party2.get(i).getName() + " has traveled " + party2.get(i).getDistanceTraveled() + " miles. ");
+			i++; // increase i every time so there will be no infinite loop
+		}
 	}
-
+	public static void createParty(ArrayList<Traveler> party, String[] name) {
+		int i = 0;
+		while (i != name.length) { // while loop is not used enough in this class, it needs love.
+			party.add(new Dwarf(name[i])); // this took me so long that i didn't add new Dwarf i tried adding the string. 
+			i++;
+		}
+		
+	}
+	public static void allTravel(ArrayList<Traveler> party, int miles) {
+		int i = 0;
+		while (i != party.size()) {
+			party.get(i).travel(miles);
+			i++;
+		}
+	}
 	
 }
