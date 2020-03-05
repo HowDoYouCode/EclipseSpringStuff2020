@@ -14,7 +14,7 @@ public class Spreadsheet implements Grid {
 			for (int j = 0; j < cols; j++) {
 				cells[i][j] = new EmptyCell();
 			}
-		}
+		} 
 	}
 	@Override
 	public String processCommand(String command) {

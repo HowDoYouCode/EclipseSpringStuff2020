@@ -15,7 +15,7 @@ public class SpreadsheetLocation implements Location {
     public int getCol() {
         // TODO Auto-generated method stub
         return col;
-    }
+    } 
     
     public SpreadsheetLocation(String cellName) {
         // TODO: Fill this out with your own code

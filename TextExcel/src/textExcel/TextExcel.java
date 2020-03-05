@@ -19,5 +19,5 @@ public class TextExcel {
 		}
 		System.out.println("Shutting Down...");
 		userinput.close();
-	}
+	} 
 }
