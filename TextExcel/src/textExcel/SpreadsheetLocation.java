@@ -21,10 +21,8 @@ public class SpreadsheetLocation implements Location {
         // TODO: Fill this out with your own code
     	cellName.toUpperCase();
     	char letter = cellName.charAt(0);
-    	int lettertoint = letter - 'A';
+    	col = letter - 'A';
     	String tobecol = cellName.substring(1);
-    	int number = Integer.parseInt(tobecol);
-    	this.row = lettertoint;
-    	this.col = number - 1;
-    }
+    	row = Integer.parseInt(tobecol)-1;
+    	}
 }

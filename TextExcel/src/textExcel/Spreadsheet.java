@@ -3,21 +3,17 @@ package textExcel;
 // Update this file with your own code.
 
 public class Spreadsheet implements Grid {
-	private Cell[][] cells;
+	private Cell[][] cells= new Cell[20][12];
 	private int rows;
 	private int cols;
 	
 	public Spreadsheet() {
-		this.rows = 20;
-		this.cols = 12;
-		int i = 0;
-		while (i < this.rows) {
-			int j = 0;
-			while (j < this.cols) {
+		rows = 20;
+		cols = 12;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
 				cells[i][j] = new EmptyCell();
-				j++;
 			}
-			i++;
 		}
 	}
 	@Override
